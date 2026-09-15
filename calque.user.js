@@ -4,7 +4,7 @@
 // @version      1.1
 // @description  Calque officiel pour la Pixel War
 // @author       Toi
-// @match        https://thepixelwar.fr
+// @match        https://thepixelwar.fr/*
 // @grant        none
 // ==/UserScript==
 
