@@ -22,7 +22,7 @@
         const calque = document.createElement('img');
         
         const timestamp = new Date().getTime();
-        calque.src = 'https://raw.githubusercontent.com/zps4sjvvc9-glitch/CdB/main/calque.png?v=' + timestamp; 
+        calque.src = 'https://raw.githubusercontent.com/zps4sjvvc9-glitch/CdB/main/calque.png?v='; 
         
         calque.style.position = 'absolute';
         calque.style.top = '0';
