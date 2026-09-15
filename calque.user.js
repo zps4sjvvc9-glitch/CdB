@@ -1,43 +1,81 @@
 // ==UserScript==
 // @name         Calque CdB (Tous les sites)
 // @namespace    http://tampermonkey.net/
-// @version      1.1
+// @version      1.2
 // @description  Calque officiel pour la Pixel War
 // @author       Toi
 // @match        https://thepixelwar.fr/*
 // @grant        none
 // ==/UserScript==
 
-(function() {
+(function () {
     'use strict';
-    window.addEventListener('load', () => {
-        // Le script cherche un canvas
-        const canvas = document.querySelector('canvas'); 
-        
+
+    const CALQUE_URL =
+        'https://raw.githubusercontent.com/zps4sjvvc9-glitch/CdB/main/calque.png';
+
+    function injecterCalque() {
+        const canvas = document.querySelector('canvas');
+
         if (!canvas) {
-            console.log("Calque CdB : Aucun canvas trouvé sur cette page. Le calque ne s'affichera pas.");
+            console.log(
+                'Calque CdB : Aucun canvas trouvé sur cette page.'
+            );
+            return;
+        }
+
+        // Évite de créer plusieurs calques
+        if (canvas.parentElement.querySelector('.calque-cdb')) {
             return;
         }
 
         const calque = document.createElement('img');
-        
-        const timestamp = new Date().getTime();
-        calque.src = 'https://raw.githubusercontent.com/zps4sjvvc9-glitch/CdB/main/calque.png?v=' + timestamp; 
-        
+
+        calque.className = 'calque-cdb';
+
+        // Anti-cache
+        calque.src = CALQUE_URL + '?v=' + Date.now();
+
+        // Récupération de la taille réellement affichée
+        const rect = canvas.getBoundingClientRect();
+
         calque.style.position = 'absolute';
         calque.style.top = '0';
         calque.style.left = '0';
-        calque.style.opacity = '0.5'; 
-        calque.style.pointerEvents = 'none'; 
-        calque.style.zIndex = '9999'; 
-        calque.style.imageRendering = 'pixelated'; 
-        
-        calque.style.width = canvas.style.width || canvas.width + 'px';
-        calque.style.height = canvas.style.height || canvas.height + 'px';
+        calque.style.width = rect.width + 'px';
+        calque.style.height = rect.height + 'px';
 
-        canvas.parentElement.style.position = 'relative';
-        canvas.parentElement.appendChild(calque);
-        
-        console.log("Calque CdB : Calque injecté avec succès sur le canvas !");
+        calque.style.opacity = '0.5';
+        calque.style.pointerEvents = 'none';
+        calque.style.zIndex = '9999';
+        calque.style.imageRendering = 'pixelated';
+
+        // Le parent doit servir de référence au positionnement absolu
+        const parent = canvas.parentElement;
+
+        if (getComputedStyle(parent).position === 'static') {
+            parent.style.position = 'relative';
+        }
+
+        parent.appendChild(calque);
+
+        console.log(
+            'Calque CdB : Calque injecté avec succès !'
+        );
+    }
+
+    // Première tentative
+    window.addEventListener('load', injecterCalque);
+
+    // Si le canvas est créé dynamiquement
+    const observer = new MutationObserver(() => {
+        if (!document.querySelector('.calque-cdb')) {
+            injecterCalque();
+        }
+    });
+
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
     });
 })();
