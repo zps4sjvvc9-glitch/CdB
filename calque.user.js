@@ -12,7 +12,7 @@
     'use strict';
 
     const CALQUE_URL =
-        'https://raw.githubusercontent.com/zps4sjvvc9-glitch/CdB/main/calque.png';
+        'https://raw.githubusercontent.com/zps4sjvvc9-glitch/CdB/main/calque2.jpg';
 
     function injecterCalque() {
         const canvas = document.querySelector('canvas');
