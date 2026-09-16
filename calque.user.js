@@ -4,7 +4,7 @@
 // @version      1.2
 // @description  Calque officiel pour la Pixel War
 // @author       Toi
-// @match        https://thepixelwar.fr/*
+// @match        https://cdb.bde-cs.fr/pixels
 // @grant        none
 // ==/UserScript==
 
